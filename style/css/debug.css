@@ -1,0 +1,23 @@
+.tables-wrapper {
+  margin-top: 3rem;
+}
+.tables-wrapper .tables {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+.tables-wrapper .tables table th:nth-child(1), .tables-wrapper .tables table td:nth-child(1) {
+  width: 20%;
+}
+.tables-wrapper .tables table th:nth-child(2), .tables-wrapper .tables table td:nth-child(2) {
+  width: 30%;
+}
+.tables-wrapper .tables table th:nth-child(3), .tables-wrapper .tables table th:nth-child(4), .tables-wrapper .tables table td:nth-child(3), .tables-wrapper .tables table td:nth-child(4) {
+  width: 10%;
+}
+.tables-wrapper .tables table th:nth-child(5), .tables-wrapper .tables table th:nth-child(6), .tables-wrapper .tables table td:nth-child(5), .tables-wrapper .tables table td:nth-child(6) {
+  width: 15%;
+}
+
+/*# sourceMappingURL=debug.css.map */

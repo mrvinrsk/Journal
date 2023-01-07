@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="16d93efe-575b-44be-85c0-f77dc04b1478" name="mrvinrsk.de" url="http://mrvinrsk.de">
+        <fileTransfer rootFolder="/var/www/html" accessType="SFTP" host="mrvinrsk.de" port="22" sshConfigId="b6abf3ee-0b61-4601-b3bd-e1f930d50d4a" sshConfig="root@mrvinrsk.de:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
