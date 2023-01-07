@@ -20,14 +20,19 @@ $moods = $pdo->query("SELECT * FROM Mood;");
 <body>
 
 <main>
-    <h1>Schreiben</h1>
+    <div class="header">
+        <h1>Schreiben</h1>
+        <p>
+            Ganz gleich, wie dein Tag war, hier hast du die Möglichkeit, deine Gedanken zu notieren. Schreibe, was dich glücklich macht oder was dich traurig macht. Schreibe, was dir gerade durch den Kopf geht.
+        </p>
+    </div>
 
     <div class="form">
         <div class="moods-wrapper">
             <span>Wie fühlst du dich?</span>
             <div class="moods">
                 <?php foreach ($moods as $mood) { ?>
-                    <div class="mood icon-text" data-id="<?php echo $mood['id']; ?>"><?php echo $mood["bezeichnung"]; ?></div>
+                    <div class="mood icon-text" data-id="<?php echo $mood['id']; ?>"><span class="icon"><?php echo $mood["gicon"]; ?></span><span class="stimmung"><?php echo $mood["bezeichnung"]; ?></span></div>
                 <?php } ?>
             </div>
         </div>
@@ -43,6 +48,36 @@ $moods = $pdo->query("SELECT * FROM Mood;");
         </div>
 
         <button class="submit full" id="save">Eintrag speichern</button>
+    </div>
+
+    <div class="formatting">
+        <h2>Formatierung</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Syntax</th>
+                <th>Ergebnis</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>h2((Überschrift))<br><span class="text-muted">Möglich von 2 (größte)–4 (kleinste)</span></td>
+                <td><h2 style="margin: 0;">Überschrift</h2></td>
+            </tr>
+
+            <tr>
+                <td>*Fett*</td>
+                <td><strong>Fett</strong></td>
+            </tr>
+
+            <tr>
+                <td>_Kursiv_</td>
+                <td><i>Kursiv</i></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </main>
 
@@ -65,9 +100,37 @@ $moods = $pdo->query("SELECT * FROM Mood;");
         });
     });
 
+    const sanitizeInput = (input) => {
+        // Escape single quotes and backslashes
+        input = input.replace(/['\\]/g, "\\$&");
+
+        // Remove control characters
+        input = input.replace(/[\x00-\x1F\x7F]/g, "");
+
+        // Convert HTML tags to character entities
+        input = input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+        // Trim leading and trailing whitespace
+        input = input.trim();
+
+        return input;
+    }
+
+
     document.querySelector("#save").addEventListener("click", () => {
         let title = document.querySelector("#title").value;
         let content = document.querySelector("#content").value;
+        let mood = document.querySelector(".mood.selected").dataset.id;
+
+        title = sanitizeInput(title);
+        content = sanitizeInput(content);
+
+        content = content.replace(/\r?\n/g, '<br>');
+        content = content.replace(/\*([^*]+)\*/g, '<strong>$1</strong>');
+        content = content.replace(/\_([^*]+)\_/g, '<i>$1</i>');
+        content = content.replace(/h2\(\(([^)]+)\)\)/g, '<h2>$1</h2>');
+        content = content.replace(/h3\(\(([^)]+)\)\)/g, '<h3>$1</h3>');
+        content = content.replace(/h4\(\(([^)]+)\)\)/g, '<h4>$1</h4>');
 
         $.ajax({
             url: "ajax/write.php",
@@ -75,29 +138,20 @@ $moods = $pdo->query("SELECT * FROM Mood;");
             data: {
                 title: title,
                 content: content,
-                mood: document.querySelector(".mood.selected").dataset.id
+                mood: mood
             },
             success: (data) => {
                 let msg = document.querySelector("#message");
-                let m = document.querySelector(".mood.selected").textContent;
 
-                switch (data) {
-                    case "Klasse":
-                    case "Positiv":
-                        msg.innerHTML = "Es freut uns zu hören, dass du dich <strong>" + m.toLowerCase() + "</strong> fühlst.";
-                        break;
-
-                    case "Eher positiv":
-                    case "Neutral":
-                    case "Eher negativ":
-                        msg.innerHTML = "Naja, es geht schlimmer als <strong>" + m.toLowerCase() + "</strong>, morgen ist auch noch ein Tag. Lass dich nicht unterkriegen.";
-                        break;
-
-                    case "Negativ":
-                    case "Miserabel":
-                        msg.innerHTML = "Wir hoffen, dass du dich bald besser fühlst. Sich <strong>" + m.toLowerCase() + "</strong> zu fühlen, ist nicht schön.";
-                        break;
-                }
+                $.ajax({
+                    url: "ajax/getMoodSelectionMessage.php",
+                    data: {
+                        mood: mood
+                    },
+                    success: (data) => {
+                        msg.innerHTML = data;
+                    }
+                });
 
                 document.querySelectorAll("input, textarea").forEach(input => {
                     input.value = "";

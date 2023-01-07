@@ -1,0 +1,52 @@
+.complete-entry {
+  background-color: #f0f0fa;
+  border-radius: 17px;
+  padding: 1.5rem;
+}
+@media screen and (min-width: 768px) {
+  .complete-entry {
+    padding: 2rem;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .complete-entry {
+    padding: 3rem;
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-start;
+}
+.title h1 {
+  margin: 0;
+}
+.title .timestamp {
+  color: #9a9a9c;
+}
+.title .mood {
+  margin-top: 0.5rem;
+}
+
+.entry {
+  margin-top: 2rem;
+}
+@media screen and (min-width: 768px) {
+  .entry {
+    margin-top: 3rem;
+  }
+}
+
+main > .buttons {
+  margin-top: 1rem;
+}
+main > .buttons button#edit {
+  background-color: #dedee0;
+}
+main > .buttons button#delete {
+  background-color: #cc5233;
+}
+
+/*# sourceMappingURL=read-entry.css.map */

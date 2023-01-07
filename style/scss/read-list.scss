@@ -24,19 +24,39 @@
 
     .title {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 2rem;
-      margin-bottom: 1.25em;
+      flex-direction: column;
+
+      @media screen and (min-width: utils.$bp-tablet) {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      h2 {
+        margin: 0;
+      }
     }
 
     .timestamp {
       color: utils.$col-gray-lighter;
+      flex-shrink: 0;
+    }
+
+    p {
+      margin-top: 2em;
+    }
+
+    .info {
+      margin-top: .5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .25rem;
     }
   }
 }
 
 .read-more {
   margin-top: 1.5rem;
-  background-color: utils.$col-primary-1;
+  background-color: lighten(utils.$col-primary-1, utils.$col-modify);
+  cursor: pointer;
 }

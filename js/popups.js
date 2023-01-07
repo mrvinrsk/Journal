@@ -6,7 +6,7 @@ $(function () {
             togglePopup(popup.id);
         });
 
-        popup.prepend(close);
+        popup.appendChild(close);
     });
 
     document.querySelectorAll("[data-toggle-popup]").forEach((toggle) => {

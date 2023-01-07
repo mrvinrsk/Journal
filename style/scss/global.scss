@@ -1,5 +1,29 @@
 @use "utils";
 
+/* fallback */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 100 700;
+  src: url(../../fonts/googleicons.woff2) format('woff2');
+}
+
+.material-symbols-outlined, .icon {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -moz-font-feature-settings: 'liga';
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* montserrat-300 - latin */
 @font-face {
   font-family: 'Montserrat';
@@ -100,13 +124,21 @@ html, body {
 }
 
 main {
-  width: min(95%, 950px);
+  width: min(95%, 800px);
   margin-inline: auto;
   padding-block: 5%;
 }
 
 h1 {
-  margin-bottom: 1em;
+  margin-bottom: .75em;
+}
+
+.header {
+  margin-bottom: 2rem;
+
+  h1 {
+    margin-bottom: .15em;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -124,9 +156,46 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+h1 {
+  font-size: 2.25rem;
+
+  @media screen and (min-width: utils.$bp-tablet) {
+    font-size: 3rem;
+  }
+}
+
+h2 {
+  font-size: 1.75rem;
+
+  @media screen and (min-width: utils.$bp-tablet) {
+    font-size: 2.25rem;
+  }
+}
+
+h3 {
+  font-size: 1.5rem;
+
+  @media screen and (min-width: utils.$bp-tablet) {
+    font-size: 1.75rem;
+  }
+}
+
+h4 {
+  font-size: 1.25rem;
+
+  @media screen and (min-width: utils.$bp-tablet) {
+    font-size: 1.5rem;
+  }
+}
+
+
 div.table {
   width: 100%;
   overflow-x: auto;
+}
+
+.text-muted {
+  color: utils.$col-gray-lighter;
 }
 
 table {
@@ -227,14 +296,27 @@ input, textarea {
 button, .button {
   position: relative;
   border: none;
-  padding: .75rem 1.5rem;
+  padding: .95rem 1.85rem;
   border-radius: utils.$br-1;
   background-color: utils.$col-white-higher;
   overflow: hidden;
+  cursor: pointer;
   z-index: 2;
 
   &.small {
-    padding: .65rem 1.3rem;
+    padding: .75rem 1.5rem;
+  }
+
+  &.success {
+    background-color: utils.$col-success;
+  }
+
+  &.danger {
+    background-color: utils.$col-danger;
+  }
+
+  &.muted {
+    background-color: utils.$col-gray-lighter;
   }
 
   &::before {
@@ -247,7 +329,6 @@ button, .button {
     height: 100%;
     background: linear-gradient(90deg, utils.$col-primary-1, utils.$col-primary-2);
     opacity: 0;
-    cursor: pointer;
     transition-duration: .15s;
   }
 
@@ -261,6 +342,48 @@ button, .button {
 
   &.full {
     width: 100%;
+  }
+}
+
+.mood {
+  display: inline-flex;
+  color: utils.$col-black-lighter;
+  border: 1px solid utils.$col-gray-lighter;
+  padding: .25rem .5rem;
+  border-radius: utils.$br-1;
+
+  span {
+    font-size: .9rem;
+
+    &.icon {
+      font-size: 1.35rem;
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin-top: 2rem;
+
+  @media (min-width: utils.$bp-tablet) {
+    flex-direction: row;
+  }
+
+  button {
+    justify-content: center;
+  }
+}
+
+code {
+  font-family: monospace;
+  background-color: lighten(utils.$col-gray-lighter, utils.$col-modify);
+  padding: .5rem 1rem;
+  border-radius: utils.$br-1;
+
+  &.inline {
+    padding: .25rem .5rem;
   }
 }
 

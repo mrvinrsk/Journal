@@ -1,3 +1,5 @@
+@use "../utils";
+
 :root {
   --popup-transition-duration: .425s;
   --popup-transition-duration-short: .1s;
@@ -36,7 +38,7 @@ body.popup-shown {
   width: min(80%, 50rem);
   max-height: 90%;
   overflow-y: auto;
-  background-color: #F3F3F3;
+  background-color: utils.$col-white-higher;
   box-shadow: 0 3px 3px rgba(0 0 0 / 8%);
 
   opacity: 0;

@@ -22,18 +22,36 @@
 }
 .entries .entry .title {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  margin-bottom: 1.25em;
+  flex-direction: column;
+}
+@media screen and (min-width: 768px) {
+  .entries .entry .title {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.entries .entry .title h2 {
+  margin: 0;
 }
 .entries .entry .timestamp {
   color: #9a9a9c;
+  flex-shrink: 0;
+}
+.entries .entry p {
+  margin-top: 2em;
+}
+.entries .entry .info {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
 }
 
 .read-more {
   margin-top: 1.5rem;
-  background-color: #258fdb;
+  background-color: #67b1e6;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=read-list.css.map */

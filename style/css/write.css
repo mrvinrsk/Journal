@@ -5,7 +5,7 @@ html body main textarea {
 .moods-wrapper {
   margin-bottom: 2rem;
 }
-.moods-wrapper span {
+.moods-wrapper > span {
   display: inline-block;
   margin-bottom: 0.5rem;
   color: #464647;
@@ -25,6 +25,7 @@ html body main textarea {
   background-color: #f0f0fa;
   cursor: pointer;
   overflow: hidden;
+  border: 1px solid transparent;
   transition-duration: 0.15s;
 }
 .moods-wrapper .moods .mood::before {
@@ -37,17 +38,30 @@ html body main textarea {
   height: 100%;
   transition-duration: 0.15s;
 }
+@media (hover: hover) {
+  .moods-wrapper .moods .mood:not(.selected):hover {
+    border-color: #464647;
+  }
+}
 .moods-wrapper .moods .mood.selected {
-  background-color: #258fdb;
-  border-color: #258fdb;
-  color: #c5c5c7;
+  border-color: transparent;
+  color: #f0f0fa;
 }
 .moods-wrapper .moods .mood.selected::before {
   background: linear-gradient(90deg, #258fdb, #9146f2);
 }
 
-#message {
+.popup#success #message {
   color: #464647;
+}
+
+.formatting {
+  margin-top: 2rem;
+}
+@media screen and (min-width: 768px) {
+  .formatting {
+    margin-top: 3rem;
+  }
 }
 
 /*# sourceMappingURL=write.css.map */

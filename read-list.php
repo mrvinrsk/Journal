@@ -34,6 +34,13 @@ include_once "php/sql.php";
                         <h2><?php echo $entry["titel"]; ?></h2>
                         <span class="timestamp"><?php echo $date->format("d.m.Y") . ", " . $date->format("H:i") . " Uhr"; ?></span>
                     </div>
+                    <div class="info">
+                        <?php
+                        $mood = $pdo->query("SELECT * FROM Mood WHERE id = " . $entry["moodId"] . ";")->fetch();
+                        ?>
+                        <div class="mood icon-text"><span class="icon"><?php echo $mood["gicon"]; ?></span><span><?php echo $mood["bezeichnung"]; ?></span></div>
+                    </div>
+
                     <p><?php echo truncate_words($entry["eintrag"], 30); ?></p>
                 </div>
 
@@ -45,6 +52,14 @@ include_once "php/sql.php";
         <?php } ?>
     </div>
 </main>
+
+<script>
+    document.querySelectorAll(".read-more").forEach(function (button) {
+        button.addEventListener("click", function () {
+            window.location.href += "/" + button.id;
+        });
+    });
+</script>
 
 </body>
 </html>

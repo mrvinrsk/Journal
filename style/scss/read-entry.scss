@@ -1,0 +1,56 @@
+@use "utils";
+
+.complete-entry {
+  background-color: utils.$col-white-higher;
+  border-radius: utils.$br-3;
+  padding: 1.5rem;
+
+  @media screen and (min-width: utils.$bp-tablet) {
+    padding: 2rem;
+  }
+
+  @media screen and (min-width: utils.$bp-desktop) {
+    padding: 3rem;
+  }
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  align-items: flex-start;
+
+  h1 {
+    margin: 0;
+  }
+
+  .timestamp {
+    color: utils.$col-gray-lighter;
+  }
+
+  .mood {
+    margin-top: .5rem;
+  }
+}
+
+.entry {
+  margin-top: 2rem;
+
+  @media screen and (min-width: utils.$bp-tablet) {
+    margin-top: 3rem;
+  }
+}
+
+main > .buttons {
+  margin-top: 1rem;
+
+  button {
+    &#edit {
+      background-color: utils.$col-white-element;
+    }
+
+    &#delete {
+      background-color: utils.$col-danger;
+    }
+  }
+}
