@@ -52,7 +52,7 @@
 }
 
 html, body {
-  background-color: #d2d2d4;
+  background-color: #c5c5c7;
 }
 
 :root {
@@ -64,6 +64,10 @@ main {
   width: min(95%, 950px);
   margin-inline: auto;
   padding-block: 5%;
+}
+
+h1 {
+  margin-bottom: 1em;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -93,10 +97,10 @@ table thead {
   background: linear-gradient(90deg, #258fdb, #9146f2);
 }
 table tbody tr {
-  background-color: #d2d2d4;
+  background-color: #c5c5c7;
 }
 table tbody tr:nth-child(odd) {
-  background-color: #c5c5c8;
+  background-color: #b8b8ba;
 }
 table td, table th {
   padding: 0.5rem;
@@ -116,6 +120,195 @@ table td, table th {
   .box {
     padding: 3rem;
   }
+}
+
+/* Inputs */
+label {
+  color: #464647;
+}
+label + input, label + textarea {
+  margin-top: 0.25rem;
+}
+
+.input:not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
+input, textarea {
+  padding: 0.75em 1.5em;
+  width: 100%;
+  border-radius: 8px;
+  border: none;
+  background-color: #f0f0fa;
+  transition: border-color 0.15s;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #258fdb;
+}
+input:is(textarea), textarea:is(textarea) {
+  resize: vertical;
+  min-height: 10ch;
+  height: 10ch;
+  max-height: 50ch;
+}
+
+.form {
+  background-color: #dedee0;
+  padding: 2rem;
+  border-radius: 12px;
+}
+.form input[type=submit], .form .submit {
+  margin-top: 1rem;
+}
+
+.icon-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+button, .button {
+  position: relative;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  background-color: #f0f0fa;
+  overflow: hidden;
+  z-index: 2;
+}
+button.small, .button.small {
+  padding: 0.65rem 1.3rem;
+}
+button::before, .button::before {
+  position: absolute;
+  z-index: -1;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #258fdb, #9146f2);
+  opacity: 0;
+  cursor: pointer;
+  transition-duration: 0.15s;
+}
+button:hover, .button:hover {
+  color: #f0f0fa;
+}
+button:hover::before, .button:hover::before {
+  opacity: 1;
+}
+button.full, .button.full {
+  width: 100%;
+}
+
+/* Components */
+.step-set {
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+  transition-duration: 0.5s;
+}
+.step-set .step {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 110%;
+  padding: 3rem;
+  transition-duration: 0.5s;
+}
+.step-set .step.active {
+  left: 0;
+}
+.step-set .step.finished {
+  left: -110%;
+}
+.step-set [data-previous-step],
+.step-set [data-next-step],
+.step-set [data-step] {
+  cursor: pointer;
+}
+
+:root {
+  --popup-transition-duration: .425s;
+  --popup-transition-duration-short: .1s;
+}
+
+body.popup-shown {
+  overflow: hidden;
+}
+
+.popups {
+  position: fixed;
+  z-index: 998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition-duration: var(--popup-transition-duration);
+}
+
+.popups.show {
+  opacity: 1;
+  backdrop-filter: blur(5px) brightness(0.8);
+  pointer-events: auto;
+}
+
+.popup {
+  position: fixed;
+  z-index: 999;
+  pointer-events: none;
+  transition-duration: var(--popup-transition-duration);
+  width: min(80%, 50rem);
+  max-height: 90%;
+  overflow-y: auto;
+  background-color: #F3F3F3;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  transform: translate(-50%, calc(-50% + 40px));
+  top: 50%;
+  left: 50%;
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.popup.show {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup .close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  cursor: pointer;
+}
+
+.popup .close::before, .popup .close::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 5px;
+  background-color: #202020;
+  transition-duration: var(--popup-transition-duration-short);
+}
+
+.popup .close:hover::before {
+  transform: rotate(-45deg);
+}
+
+.popup .close:hover::after {
+  transform: rotate(45deg);
+}
+
+.popup .close::before, .popup .close::after {
+  transform: rotate(0);
 }
 
 /*# sourceMappingURL=global.css.map */

@@ -1,0 +1,39 @@
+.entries {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.entries .entry {
+  background-color: #f0f0fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  transition-duration: 0.25s;
+}
+@media screen and (min-width: 768px) {
+  .entries .entry {
+    padding: 2rem;
+  }
+}
+@media (hover: hover) {
+  .entries .entry:hover {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+  }
+}
+.entries .entry .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.25em;
+}
+.entries .entry .timestamp {
+  color: #9a9a9c;
+}
+
+.read-more {
+  margin-top: 1.5rem;
+  background-color: #258fdb;
+}
+
+/*# sourceMappingURL=read-list.css.map */

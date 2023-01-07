@@ -1,0 +1,42 @@
+@use "utils";
+
+.entries {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+
+  .entry {
+    background-color: utils.$col-white-higher;
+    padding: 1.5rem;
+    border-radius: utils.$br-2;
+    transition-duration: .25s;
+
+    @media screen and (min-width: utils.$bp-tablet) {
+      padding: 2rem;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        box-shadow: 0 3px 10px rgba(0 0 0 / 15%);
+        transform: translateY(-3px);
+      }
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 1.25em;
+    }
+
+    .timestamp {
+      color: utils.$col-gray-lighter;
+    }
+  }
+}
+
+.read-more {
+  margin-top: 1.5rem;
+  background-color: utils.$col-primary-1;
+}
