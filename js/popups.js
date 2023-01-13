@@ -6,7 +6,9 @@ $(function () {
             togglePopup(popup.id);
         });
 
-        popup.appendChild(close);
+        if (!popup.hasAttribute("data-no-close")) {
+            popup.appendChild(close);
+        }
     });
 
     document.querySelectorAll("[data-toggle-popup]").forEach((toggle) => {

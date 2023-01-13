@@ -247,8 +247,34 @@ label {
 }
 
 .input {
+  &.required {
+    label {
+      &::after {
+        content: "*";
+        color: utils.$col-danger;
+        margin-left: .25ch;
+      }
+    }
+  }
+
   &:not(:last-of-type) {
-    margin-bottom: 1rem;
+    margin-bottom: .75rem;
+  }
+}
+
+.form {
+
+  p {
+    color: utils.$col-gray-lighter;
+    text-align: center;
+
+    &.mt {
+      margin-top: 2.5rem;
+    }
+  }
+
+  button, .button {
+    margin-top: 1.25rem;
   }
 }
 
@@ -306,6 +332,18 @@ button, .button {
   text-align: center;
   z-index: 2;
 
+  &[disabled] {
+    cursor: not-allowed;
+
+    &::before {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: utils.$col-gray;
+      opacity: .25;
+    }
+  }
+
   &.icon-text {
     justify-content: center;
   }
@@ -342,7 +380,7 @@ button, .button {
     transition-duration: .15s;
   }
 
-  &:hover {
+  &:not([disabled]):hover {
     color: utils.$col-white-higher;
 
     &::before {

@@ -1,0 +1,14 @@
+.password-check {
+  border: 1px solid #CCC;
+  border-radius: 12px;
+  padding: 0.5rem;
+  margin-top: 2rem;
+}
+.password-check .check .icon {
+  color: #cc5233;
+}
+.password-check .check.success .icon {
+  color: #39bf39;
+}
+
+/*# sourceMappingURL=auth.css.map */

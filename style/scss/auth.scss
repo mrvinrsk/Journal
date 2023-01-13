@@ -1,0 +1,21 @@
+@use "utils";
+
+.password-check {
+  border: 1px solid #CCC;
+  border-radius: utils.$br-2;
+  padding: .5rem;
+  margin-top: 2rem;
+
+  .check {
+
+    .icon {
+      color: utils.$col-danger;
+    }
+
+    &.success {
+      .icon {
+        color: utils.$col-success;
+      }
+    }
+  }
+}

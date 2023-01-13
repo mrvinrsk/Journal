@@ -200,8 +200,24 @@ label + input, label + textarea {
   margin-top: 0.25rem;
 }
 
+.input.required label::after {
+  content: "*";
+  color: #cc5233;
+  margin-left: 0.25ch;
+}
 .input:not(:last-of-type) {
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.form p {
+  color: #9a9a9c;
+  text-align: center;
+}
+.form p.mt {
+  margin-top: 2.5rem;
+}
+.form button, .form .button {
+  margin-top: 1.25rem;
 }
 
 input, textarea {
@@ -251,6 +267,16 @@ button, .button {
   text-align: center;
   z-index: 2;
 }
+button[disabled], .button[disabled] {
+  cursor: not-allowed;
+}
+button[disabled]::before, .button[disabled]::before {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #606061;
+  opacity: 0.25;
+}
 button.icon-text, .button.icon-text {
   justify-content: center;
 }
@@ -281,10 +307,10 @@ button::before, .button::before {
   opacity: 0;
   transition-duration: 0.15s;
 }
-button:hover, .button:hover {
+button:not([disabled]):hover, .button:not([disabled]):hover {
   color: #f0f0fa;
 }
-button:hover::before, .button:hover::before {
+button:not([disabled]):hover::before, .button:not([disabled]):hover::before {
   opacity: 1;
 }
 button.full, .button.full {
