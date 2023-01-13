@@ -11,4 +11,4 @@ $route->add("/debug", "debug.php");
 $route->add("/install", "install.php");
 $route->add("/setup", "setup.php");
 
-$route->notFound("404.php");
+$route->notFound("/errors/4xx/404.php");

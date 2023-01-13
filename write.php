@@ -7,7 +7,8 @@ $moods = $pdo->query("SELECT * FROM Mood;");
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Schreiben | Journal</title>
 
@@ -15,15 +16,20 @@ $moods = $pdo->query("SELECT * FROM Mood;");
     <link rel="stylesheet" href="style/css/write.css">
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/popups.js"></script>
 </head>
 <body>
 
 <main>
     <div class="header">
-        <h1>Schreiben</h1>
+        <div class="simpleflex column">
+            <a class="icon-text back"><span class="icon">arrow_back</span><span>Zurück</span></a>
+            <h1>Schreiben</h1>
+        </div>
         <p>
-            Ganz gleich, wie dein Tag war, hier hast du die Möglichkeit, deine Gedanken zu notieren. Schreibe, was dich glücklich macht oder was dich traurig macht. Schreibe, was dir gerade durch den Kopf geht.
+            Ganz gleich, wie dein Tag war, hier hast du die Möglichkeit, deine Gedanken zu notieren. Schreibe, was dich
+            glücklich macht oder was dich traurig macht. Schreibe, was dir gerade durch den Kopf geht.
         </p>
     </div>
 
@@ -32,7 +38,9 @@ $moods = $pdo->query("SELECT * FROM Mood;");
             <span>Wie fühlst du dich?</span>
             <div class="moods">
                 <?php foreach ($moods as $mood) { ?>
-                    <div class="mood icon-text" data-id="<?php echo $mood['id']; ?>"><span class="icon"><?php echo $mood["gicon"]; ?></span><span class="stimmung"><?php echo $mood["bezeichnung"]; ?></span></div>
+                    <div class="mood icon-text" data-id="<?php echo $mood['id']; ?>"><span
+                                class="icon"><?php echo $mood["gicon"]; ?></span><span
+                                class="stimmung"><?php echo $mood["bezeichnung"]; ?></span></div>
                 <?php } ?>
             </div>
         </div>

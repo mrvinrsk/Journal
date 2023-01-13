@@ -1,5 +1,13 @@
 @use "utils";
 
+h1 {
+  font-size: 1.5rem;
+
+  @media screen and (min-width: utils.$bp-tablet) {
+    font-size: 2rem;
+  }
+}
+
 .entries {
   display: flex;
   flex-direction: column;

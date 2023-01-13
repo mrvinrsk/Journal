@@ -7,7 +7,8 @@ include_once "php/sql.php";
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Deine Einträge | Journal</title>
 
@@ -15,11 +16,15 @@ include_once "php/sql.php";
     <link rel="stylesheet" href="style/css/read-list.css">
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/main.js"></script>
 </head>
 <body>
 
 <main>
-    <h1>Deine Einträge</h1>
+    <div class="simpleflex">
+        <h1>Deine Einträge</h1>
+        <a href="./write" class="button success icon-text"><span class="icon">add</span><span>Schreiben</span></a>
+    </div>
 
     <div class="entries">
         <?php
@@ -38,7 +43,9 @@ include_once "php/sql.php";
                         <?php
                         $mood = $pdo->query("SELECT * FROM Mood WHERE id = " . $entry["moodId"] . ";")->fetch();
                         ?>
-                        <div class="mood icon-text"><span class="icon"><?php echo $mood["gicon"]; ?></span><span><?php echo $mood["bezeichnung"]; ?></span></div>
+                        <div class="mood icon-text"><span
+                                    class="icon"><?php echo $mood["gicon"]; ?></span><span><?php echo $mood["bezeichnung"]; ?></span>
+                        </div>
                     </div>
 
                     <p><?php echo truncate_words($entry["eintrag"], 30); ?></p>

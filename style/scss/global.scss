@@ -157,7 +157,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 2.25rem;
+  font-size: 1.85rem;
 
   @media screen and (min-width: utils.$bp-tablet) {
     font-size: 3rem;
@@ -165,23 +165,23 @@ h1 {
 }
 
 h2 {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 
   @media screen and (min-width: utils.$bp-tablet) {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
   }
 }
 
 h3 {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 
   @media screen and (min-width: utils.$bp-tablet) {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 }
 
 h4 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
 
   @media screen and (min-width: utils.$bp-tablet) {
     font-size: 1.5rem;
@@ -298,10 +298,17 @@ button, .button {
   border: none;
   padding: .95rem 1.85rem;
   border-radius: utils.$br-1;
+  color: utils.$col-black;
   background-color: utils.$col-white-higher;
   overflow: hidden;
   cursor: pointer;
+  text-decoration: none;
+  text-align: center;
   z-index: 2;
+
+  &.icon-text {
+    justify-content: center;
+  }
 
   &.small {
     padding: .75rem 1.5rem;
@@ -309,10 +316,12 @@ button, .button {
 
   &.success {
     background-color: utils.$col-success;
+    color: utils.$col-white-higher;
   }
 
   &.danger {
     background-color: utils.$col-danger;
+    color: utils.$col-white-higher;
   }
 
   &.muted {
@@ -328,6 +337,7 @@ button, .button {
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, utils.$col-primary-1, utils.$col-primary-2);
+    color: utils.$col-white-higher;
     opacity: 0;
     transition-duration: .15s;
   }
@@ -342,6 +352,25 @@ button, .button {
 
   &.full {
     width: 100%;
+  }
+}
+
+.simpleflex {
+  display: flex;
+  flex-direction: row;
+  gap: .75rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  > * {
+    margin: 0;
+  }
+
+  &.column {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 }
 

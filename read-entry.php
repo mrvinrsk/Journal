@@ -20,6 +20,7 @@ $mood = $pdo->query("SELECT * FROM Mood WHERE id = " . $entry["moodId"] . ";")->
     <link rel="stylesheet" href="style/css/read-entry.css">
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/main.js"></script>
     <script src="js/popups.js"></script>
 </head>
 <body>
