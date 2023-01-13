@@ -21,13 +21,13 @@
 
 <main>
     <div class="step-set auth">
-        <div class="step login">
+        <div class="step login active">
             <h2>Login</h2>
 
             <div class="form">
                 <div class="input required">
-                    <label for="title">E-Mail</label>
-                    <input type="text" name="mail" id="mail">
+                    <label for="title">E-Mail / Nutzername</label>
+                    <input type="text" name="cred" id="cred">
                 </div>
 
                 <div class="input required">
@@ -158,15 +158,35 @@
     }
 
     function login() {
+        let cred = document.querySelector(".login input[name='cred']").value;
+        let password = document.querySelector(".login input[name='password']").value;
 
+        $.ajax({
+            url: "ajax/createLoginSession.php",
+            type: "POST",
+            data: {
+                cred: cred,
+                pass: password
+            },
+            success: (sessionId) => {
+                if (sessionId !== -1) {
+                    togglePopup("login-success");
+                    console.log("SessionID:", sessionId);
+
+                    setTimeout(() => {
+                        redirect();
+                    }, 3000);
+                }
+            }
+        });
     }
 
     function updatePasswordCheck() {
         let password = document.querySelector(".register input[name='password']").value;
-        var lowercaseRegex = /[a-z]/;
-        var uppercaseRegex = /[A-Z]/;
-        var numberRegex = /\d/;
-        var symbolRegex = /[@$!%*?&]/;
+        const lowercaseRegex = /[a-z]/;
+        const uppercaseRegex = /[A-Z]/;
+        const numberRegex = /\d/;
+        const symbolRegex = /[@$!%*?&]/;
 
         if (password.length >= 8) {
             document.querySelector(".register .password-check .min-characters").classList.add("success");
@@ -217,17 +237,17 @@
 
     function redirect() {
         let where = "account";
-        if (getUrlParameter("back").length >= 1) {
-            where = getUrlParameter("back");
+        if (getUrlParameter("next") != null) {
+            where = getUrlParameter("next");
         }
         where = decodeURI(where);
 
         console.log("Redirect:", where);
-        // window.location = removeAfter("/Journal/") + where;
+        window.location = removeAfter("/Journal/") + where;
     }
 
     function register() {
-        let mail = document.querySelector(".register input[name='mail']").value;
+        let cred = document.querySelector(".register input[name='cred']").value;
         let mail_regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
         let username = document.querySelector(".register input[name='username']").value;
@@ -235,12 +255,12 @@
         let password = document.querySelector(".register input[name='password']").value;
         let password_repeat = document.querySelector(".register input[name='password_repeat']").value;
 
-        if (mail.length === 0) {
+        if (cred.length === 0) {
             togglePopup("no-mail");
             return;
         }
 
-        if (!mail_regex.test(mail)) {
+        if (!mail_regex.test(cred)) {
             togglePopup("wrong-mail");
             return;
         }
@@ -264,7 +284,7 @@
             url: "ajax/checkMail.php",
             type: "GET",
             data: {
-                mail: mail
+                mail: cred
             },
             success: (result) => {
                 console.log("checkMail:", result);
@@ -275,24 +295,27 @@
                         url: "ajax/register.php",
                         type: "POST",
                         data: {
-                            mail: mail,
+                            mail: cred,
                             username: username,
                             password: password
                         },
                         success: (result) => {
                             if (result.toLowerCase() === "true") {
-                                togglePopup("register-success");
-
                                 $.ajax({
                                     url: "ajax/createLoginSession.php",
                                     type: "POST",
                                     data: {
-                                        mail: mail,
-                                        password: password
+                                        cred: cred,
+                                        pass: password
                                     },
                                     success: (sessionId) => {
                                         if (sessionId !== -1) {
                                             togglePopup("register-success");
+                                            console.log("SessionID:", sessionId);
+
+                                            setTimeout(() => {
+                                                redirect();
+                                            }, 3000);
                                         }
                                     }
                                 });

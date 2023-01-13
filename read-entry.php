@@ -2,6 +2,14 @@
 include_once "php/methods.php";
 include_once "php/sql.php";
 
+$user = getLoggedInUser($pdo);
+$entryUser = $pdo->query("SELECT userId FROM JournalEntry WHERE id = " . $params['id'] . ";")->fetch();
+
+if($user != $entryUser['userId'] || $user == -1) {
+    include_once "./errors/custom/read-others-entry.php";
+    exit();
+}
+
 $entry = $pdo->query("SELECT * FROM JournalEntry WHERE id = " . $params['id'] . ";")->fetch();
 $date = new DateTime($entry['datum']);
 $mood = $pdo->query("SELECT * FROM Mood WHERE id = " . $entry["moodId"] . ";")->fetch();

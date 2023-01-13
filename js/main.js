@@ -26,7 +26,9 @@ function getUrlParameter(name) {
 
 
 $(function () {
-    document.querySelector(".back").addEventListener("click", function () {
-        history.back();
-    });
+    if (document.querySelector(".back")) {
+        document.querySelector(".back").addEventListener("click", function () {
+            history.back();
+        });
+    }
 });

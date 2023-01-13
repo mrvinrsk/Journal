@@ -2,11 +2,11 @@
 include_once "../php/sql.php";
 
 
-$mail = $_REQUEST["mail"];
+$cred = $_REQUEST["cred"];
 $pass = $_REQUEST["pass"];
 
 // check if password is correct
-$account = $pdo->query("SELECT id, passwort FROM Account WHERE mail = '$mail';")->fetch();
+$account = $pdo->query("SELECT id, passwort FROM Account WHERE mail = '$cred' OR username = '$cred';")->fetch();
 $passHash = $account["passwort"];
 $userId = $account["id"];
 

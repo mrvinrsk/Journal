@@ -9,6 +9,7 @@
 
     <base href="/Journal/">
     <link rel="stylesheet" href="style/css/global.css">
+    <link rel="stylesheet" href="style/css/error.css">
 </head>
 <body>
 

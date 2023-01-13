@@ -3,6 +3,11 @@ include_once "php/sql.php";
 include_once "php/methods.php";
 
 $userId = getLoggedInUser($pdo);
+
+if ($userId == -1) {
+    header("Location: ./auth/?next=account");
+    exit();
+}
 $account = $pdo->query("SELECT * FROM Account WHERE id = $userId;")->fetch();
 ?>
 
