@@ -24,6 +24,7 @@ $account = $pdo->query("SELECT * FROM Account WHERE id = $userId;")->fetch();
 
     <script src="js/jquery.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/popups.js"></script>
 </head>
 <body>
 
@@ -46,6 +47,7 @@ $account = $pdo->query("SELECT * FROM Account WHERE id = $userId;")->fetch();
 
             if ($entriesStmt->rowCount() >= 1) {
                 foreach ($entries as $entry) {
+                    $entryId = $entry["id"];
                     $date = new DateTime($entry['datum']);
                     ?>
 
@@ -62,6 +64,19 @@ $account = $pdo->query("SELECT * FROM Account WHERE id = $userId;")->fetch();
                                 <div class="mood icon-text"><span
                                             class="icon"><?php echo $mood["gicon"]; ?></span><span><?php echo $mood["bezeichnung"]; ?></span>
                                 </div>
+
+                                <?php
+                                $causesStmt = $pdo->query("SELECT Cause.gicon, Cause.bezeichnung FROM Cause, EntryCause WHERE entryId = $entryId AND Cause.id = EntryCause.causeId;");
+                                if ($causesStmt->rowCount() >= 1) {
+                                    $causes = $causesStmt->fetchAll();
+
+                                    foreach ($causes as $cause) {
+                                        ?>
+                                        <div class="icon-text mood"><span class="icon"><?php echo $cause["gicon"]; ?></span><span><?php echo $cause["bezeichnung"]; ?></span></div>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </div>
 
                             <p><?php echo truncate_words($entry["eintrag"], 30); ?></p>

@@ -2,22 +2,26 @@ html body main textarea {
   height: 30ch;
 }
 
-.moods-wrapper {
+.all-blobs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   margin-bottom: 2rem;
 }
-.moods-wrapper > span {
+.all-blobs > div > span {
   display: inline-block;
   margin-bottom: 0.5rem;
   color: #464647;
 }
-.moods-wrapper .moods {
+
+.blob-wrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 0.25rem;
   cursor: pointer;
 }
-.moods-wrapper .moods .mood {
+.blob-wrapper .blob {
   position: relative;
   z-index: 2;
   padding: 0.25em 0.5em;
@@ -28,7 +32,7 @@ html body main textarea {
   border: 1px solid transparent;
   transition-duration: 0.15s;
 }
-.moods-wrapper .moods .mood::before {
+.blob-wrapper .blob::before {
   position: absolute;
   z-index: -1;
   content: "";
@@ -39,15 +43,15 @@ html body main textarea {
   transition-duration: 0.15s;
 }
 @media (hover: hover) {
-  .moods-wrapper .moods .mood:not(.selected):hover {
+  .blob-wrapper .blob:not(.selected):hover {
     border-color: #464647;
   }
 }
-.moods-wrapper .moods .mood.selected {
+.blob-wrapper .blob.selected {
   border-color: transparent;
   color: #f0f0fa;
 }
-.moods-wrapper .moods .mood.selected::before {
+.blob-wrapper .blob.selected::before {
   background: linear-gradient(90deg, #258fdb, #9146f2);
 }
 

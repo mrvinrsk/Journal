@@ -333,7 +333,8 @@
     }
 
     /* TODO: Add to install script:
-    *   CREATE TABLE IF NOT EXISTS LoginSession(userId INT NOT NULL PRIMARY KEY, sessionId VARCHAR(64), FOREIGN KEY (userId) REFERENCES Account(id));
+    * CREATE TABLE IF NOT EXISTS LoginSession(userId INT NOT NULL PRIMARY KEY, sessionId VARCHAR(64), FOREIGN KEY (userId) REFERENCES Account(id));
+    * CREATE TABLE IF NOT EXISTS EntryCause(entryId INT NOT NULL, causeId INT NOT NULL, PRIMARY KEY(entryId, causeId), FOREIGN KEY (entryId) REFERENCES JournalEntry(id), FOREIGN KEY (causeId) REFERENCES Cause(id));
     */
 </script>
 

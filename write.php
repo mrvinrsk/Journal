@@ -9,6 +9,7 @@ if ($userId == -1) {
 }
 
 $moods = $pdo->query("SELECT * FROM Mood;");
+$causes = $pdo->query("SELECT * FROM Cause;");
 ?>
 
 <!doctype html>
@@ -42,14 +43,27 @@ $moods = $pdo->query("SELECT * FROM Mood;");
     </div>
 
     <div class="form">
-        <div class="moods-wrapper">
-            <span>Wie fühlst du dich?</span>
-            <div class="moods">
-                <?php foreach ($moods as $mood) { ?>
-                    <div class="mood icon-text" data-id="<?php echo $mood['id']; ?>"><span
-                                class="icon"><?php echo $mood["gicon"]; ?></span><span
-                                class="stimmung"><?php echo $mood["bezeichnung"]; ?></span></div>
-                <?php } ?>
+        <div class="all-blobs">
+            <div class="moods-wrapper">
+                <span>Wie fühlst du dich?</span>
+                <div class="blob-wrapper" data-only-one>
+                    <?php foreach ($moods as $mood) { ?>
+                        <div class="blob mood icon-text" data-id="<?php echo $mood['id']; ?>"><span
+                                    class="icon"><?php echo $mood["gicon"]; ?></span><span
+                                    class="stimmung"><?php echo $mood["bezeichnung"]; ?></span></div>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <div class="cause-wrapper">
+                <span>Was ist der Grund?</span>
+                <div class="blob-wrapper">
+                    <?php foreach ($causes as $cause) { ?>
+                        <div class="blob cause icon-text" data-id="<?php echo $cause['id']; ?>"><span
+                                    class="icon"><?php echo $cause["gicon"]; ?></span><span
+                                    class="stimmung"><?php echo $cause["bezeichnung"]; ?></span></div>
+                    <?php } ?>
+                </div>
             </div>
         </div>
 
@@ -112,13 +126,15 @@ $moods = $pdo->query("SELECT * FROM Mood;");
 </div>
 
 <script>
-    document.querySelectorAll(".mood").forEach(mood => {
-        mood.addEventListener("click", () => {
-            document.querySelectorAll(".mood").forEach(mood => {
-                mood.classList.remove("selected");
-            });
+    document.querySelectorAll(".blob").forEach(blob => {
+        blob.addEventListener("click", () => {
+            if(!blob.classList.contains("selected")) {
+                if (blob.parentElement.hasAttribute("data-only-one")) {
+                    blob.parentElement.querySelectorAll(".blob").forEach(b => b.classList.remove("selected"));
+                }
+            }
 
-            mood.classList.add("selected");
+            blob.classList.toggle("selected");
         });
     });
 
@@ -143,6 +159,11 @@ $moods = $pdo->query("SELECT * FROM Mood;");
         let title = document.querySelector("#title").value;
         let content = document.querySelector("#content").value;
         let mood = (document.querySelector(".mood.selected") ? document.querySelector(".mood.selected").dataset.id : null);
+        let causes = [];
+
+        document.querySelectorAll(".cause.selected").forEach(cause => {
+            causes.push(cause.dataset.id);
+        });
 
         title = sanitizeInput(title);
         content = sanitizeInput(content);
@@ -181,6 +202,7 @@ $moods = $pdo->query("SELECT * FROM Mood;");
                     title: title,
                     content: content,
                     mood: mood,
+                    causes: causes,
                     user: <?php echo $userId; ?>
                 },
                 success: (data) => {
@@ -210,7 +232,7 @@ $moods = $pdo->query("SELECT * FROM Mood;");
                         input.value = "";
                     });
 
-                    document.querySelectorAll(".mood").forEach(mood => {
+                    document.querySelectorAll(".blob").forEach(mood => {
                         mood.classList.remove("selected");
                     });
 
