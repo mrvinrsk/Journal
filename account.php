@@ -28,8 +28,52 @@ $account = $pdo->query("SELECT * FROM Account WHERE id = $userId;")->fetch();
 <body>
 
 <main>
-    <h1>Willkommen, <strong><?php echo $account["username"]; ?></strong></h1>
-    <p class="text-muted">Du hast dich zuletzt am <?php echo date('d.m.Y', strtotime($account["lastLogin"])); ?> um <?php echo date('H:i', strtotime($account["lastLogin"])); ?> Uhr eingeloggt.</p>
+    <div class="header">
+        <h1>Willkommen, <strong><?php echo $account["username"]; ?></strong></h1>
+        <p class="text-muted">Du hast dich zuletzt am <?php echo date('d.m.Y', strtotime($account["lastLogin"])); ?> um <?php echo date('H:i', strtotime($account["lastLogin"])); ?> Uhr eingeloggt.</p>
+    </div>
+
+    <div class="latest-entries">
+        <div class="simpleflex">
+            <h2>Deine Einträge</h2>
+            <a href="./write" class="button success icon-text"><span class="icon">add</span><span>Schreiben</span></a>
+        </div>
+
+        <div class="entries">
+            <?php
+            $entries = $pdo->query("SELECT * FROM JournalEntry WHERE userId = $userId ORDER BY datum DESC LIMIT 3;")->fetchAll();
+            foreach ($entries as $entry) {
+                $date = new DateTime($entry['datum']);
+                ?>
+
+                <div class="entry">
+                    <div class="text">
+                        <div class="title">
+                            <h2><?php echo $entry["titel"]; ?></h2>
+                            <span class="timestamp"><?php echo $date->format("d.m.Y") . ", " . $date->format("H:i") . " Uhr"; ?></span>
+                        </div>
+                        <div class="info">
+                            <?php
+                            $mood = $pdo->query("SELECT * FROM Mood WHERE id = " . $entry["moodId"] . ";")->fetch();
+                            ?>
+                            <div class="mood icon-text"><span
+                                        class="icon"><?php echo $mood["gicon"]; ?></span><span><?php echo $mood["bezeichnung"]; ?></span>
+                            </div>
+                        </div>
+
+                        <p><?php echo truncate_words($entry["eintrag"], 30); ?></p>
+                    </div>
+
+                    <button class="small read-more" id="<?php echo $entry['id']; ?>">Ansehen</button>
+                </div>
+
+            <?php } ?>
+        </div>
+
+        <?php if ($pdo->query("SELECT 1 FROM JournalEntry WHERE userId = $userId ORDER BY datum DESC LIMIT 4;")->rowCount() > 3) { ?>
+            <a class="button mt" href="./read">Alle Einträge</a>
+        <?php } ?>
+    </div>
 </main>
 
 </body>

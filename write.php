@@ -1,5 +1,13 @@
 <?php
+include_once "php/methods.php";
 include_once "php/sql.php";
+
+$userId = getLoggedInUser($pdo);
+if ($userId == -1) {
+    include_once "errors/custom/not-logged-in.php";
+    exit();
+}
+
 $moods = $pdo->query("SELECT * FROM Mood;");
 ?>
 
@@ -146,7 +154,8 @@ $moods = $pdo->query("SELECT * FROM Mood;");
             data: {
                 title: title,
                 content: content,
-                mood: mood
+                mood: mood,
+                user: <?php echo $userId; ?>
             },
             success: (data) => {
                 let msg = document.querySelector("#message");

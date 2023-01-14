@@ -5,7 +5,10 @@ include_once "php/sql.php";
 $user = getLoggedInUser($pdo);
 $entryUser = $pdo->query("SELECT userId FROM JournalEntry WHERE id = " . $params['id'] . ";")->fetch();
 
-if($user != $entryUser['userId'] || $user == -1) {
+if ($user == -1) {
+    include_once "./errors/custom/not-logged-in.php";
+    exit();
+} else if ($user != $entryUser['userId']) {
     include_once "./errors/custom/read-others-entry.php";
     exit();
 }

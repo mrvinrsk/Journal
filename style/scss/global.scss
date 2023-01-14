@@ -321,6 +321,7 @@ input, textarea {
 
 button, .button {
   position: relative;
+  display: inline-block;
   border: none;
   padding: .95rem 1.85rem;
   border-radius: utils.$br-1;
@@ -331,6 +332,16 @@ button, .button {
   text-decoration: none;
   text-align: center;
   z-index: 2;
+
+  width: 100%;
+
+  @media (min-width: utils.$bp-tablet) {
+    width: auto;
+  }
+
+  &.icon-text {
+    display: inline-flex;
+  }
 
   &[disabled] {
     cursor: not-allowed;
@@ -396,13 +407,17 @@ button, .button {
 .simpleflex {
   display: flex;
   flex-direction: row;
-  gap: .75rem;
+  gap: 1.25rem;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
 
   > * {
     margin: 0;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    flex-shrink: 0;
   }
 
   &.column {

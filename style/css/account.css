@@ -1,12 +1,3 @@
-h1 {
-  font-size: 1.5rem;
-}
-@media screen and (min-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-}
-
 .entries {
   display: flex;
   flex-direction: column;
@@ -63,4 +54,8 @@ h1 {
   cursor: pointer;
 }
 
-/*# sourceMappingURL=read-list.css.map */
+.latest-entries .mt {
+  margin-top: 1.5rem;
+}
+
+/*# sourceMappingURL=account.css.map */

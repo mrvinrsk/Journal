@@ -1,6 +1,12 @@
 <?php
 include_once "php/methods.php";
 include_once "php/sql.php";
+
+$userId = getLoggedInUser($pdo);
+if ($userId == -1) {
+    include_once "errors/custom/not-logged-in.php";
+    exit();
+}
 ?>
 
 <!doctype html>
@@ -28,7 +34,7 @@ include_once "php/sql.php";
 
     <div class="entries">
         <?php
-        $entries = $pdo->query("SELECT * FROM JournalEntry ORDER BY datum DESC;")->fetchAll();
+        $entries = $pdo->query("SELECT * FROM JournalEntry WHERE userId = $userId ORDER BY datum DESC;")->fetchAll();
         foreach ($entries as $entry) {
             $date = new DateTime($entry['datum']);
             ?>
@@ -51,9 +57,7 @@ include_once "php/sql.php";
                     <p><?php echo truncate_words($entry["eintrag"], 30); ?></p>
                 </div>
 
-                <?php if (strcmp(truncate_words($entry["eintrag"], 30), $entry["eintrag"])) { ?>
-                    <button class="small read-more" id="<?php echo $entry['id']; ?>">Weiterlesen</button>
-                <?php } ?>
+                <button class="small read-more" id="<?php echo $entry['id']; ?>">Ansehen</button>
             </div>
 
         <?php } ?>
