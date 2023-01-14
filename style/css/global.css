@@ -327,6 +327,18 @@ button.full, .button.full {
   width: 100%;
 }
 
+ul {
+  padding: 0;
+  list-style: disc inside;
+  margin-top: 0.75rem;
+}
+ul:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+ul ul {
+  margin-left: 0.75rem;
+}
+
 .simpleflex {
   display: flex;
   flex-direction: row;

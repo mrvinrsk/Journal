@@ -46,7 +46,7 @@
             <div class="form">
                 <div class="input required">
                     <label for="title">E-Mail</label>
-                    <input type="email" name="mail" id="mail">
+                    <input type="email" name="cred" id="cred">
                 </div>
 
                 <div class="input required">

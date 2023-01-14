@@ -53,6 +53,7 @@ html body main textarea {
 
 .popup#success #message {
   color: #464647;
+  margin-top: 1.5rem;
 }
 
 .formatting {

@@ -29,37 +29,46 @@ if ($userId == -1) {
 <main>
     <div class="simpleflex">
         <h1>Deine Einträge</h1>
-        <a href="./write" class="button success icon-text"><span class="icon">add</span><span>Schreiben</span></a>
+        <a href="./write" class="button success icon-text"><span class="icon">edit_note</span><span>Schreiben</span></a>
     </div>
 
     <div class="entries">
         <?php
-        $entries = $pdo->query("SELECT * FROM JournalEntry WHERE userId = $userId ORDER BY datum DESC;")->fetchAll();
-        foreach ($entries as $entry) {
-            $date = new DateTime($entry['datum']);
-            ?>
+        $entriesStmt = $pdo->query("SELECT * FROM JournalEntry WHERE userId = $userId ORDER BY datum DESC LIMIT 3;");
+        $entries = $entriesStmt->fetchAll();
 
-            <div class="entry">
-                <div class="text">
-                    <div class="title">
-                        <h2><?php echo $entry["titel"]; ?></h2>
-                        <span class="timestamp"><?php echo $date->format("d.m.Y") . ", " . $date->format("H:i") . " Uhr"; ?></span>
-                    </div>
-                    <div class="info">
-                        <?php
-                        $mood = $pdo->query("SELECT * FROM Mood WHERE id = " . $entry["moodId"] . ";")->fetch();
-                        ?>
-                        <div class="mood icon-text"><span
-                                    class="icon"><?php echo $mood["gicon"]; ?></span><span><?php echo $mood["bezeichnung"]; ?></span>
+        if ($entriesStmt->rowCount() >= 1) {
+            foreach ($entries as $entry) {
+                $date = new DateTime($entry['datum']);
+                ?>
+
+                <div class="entry">
+                    <div class="text">
+                        <div class="title">
+                            <h2><?php echo $entry["titel"]; ?></h2>
+                            <span class="timestamp"><?php echo $date->format("d.m.Y") . ", " . $date->format("H:i") . " Uhr"; ?></span>
                         </div>
+                        <div class="info">
+                            <?php
+                            $mood = $pdo->query("SELECT * FROM Mood WHERE id = " . $entry["moodId"] . ";")->fetch();
+                            ?>
+                            <div class="mood icon-text"><span
+                                        class="icon"><?php echo $mood["gicon"]; ?></span><span><?php echo $mood["bezeichnung"]; ?></span>
+                            </div>
+                        </div>
+
+                        <p><?php echo truncate_words($entry["eintrag"], 30); ?></p>
                     </div>
 
-                    <p><?php echo truncate_words($entry["eintrag"], 30); ?></p>
+                    <button class="small read-more" id="<?php echo $entry['id']; ?>">Ansehen</button>
                 </div>
 
-                <button class="small read-more" id="<?php echo $entry['id']; ?>">Ansehen</button>
+            <?php }
+        } else {
+            ?>
+            <div class="entry missing">
+                <p>Du hast noch keine Einträge geschrieben</p>
             </div>
-
         <?php } ?>
     </div>
 </main>

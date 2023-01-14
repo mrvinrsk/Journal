@@ -25,7 +25,7 @@ h1 {
   }
 }
 @media (hover: hover) {
-  .entry:hover {
+  .entry:not(.missing):hover {
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
     transform: translateY(-3px);
   }
@@ -61,6 +61,15 @@ h1 {
   margin-top: 1.5rem;
   background-color: #67b1e6;
   cursor: pointer;
+}
+.entry.missing {
+  background-color: transparent;
+  border: 2px dashed #9a9a9c;
+}
+.entry.missing p {
+  margin: 0;
+  text-align: center;
+  color: #606061;
 }
 
 /*# sourceMappingURL=read-list.css.map */

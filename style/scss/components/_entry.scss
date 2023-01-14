@@ -17,9 +17,11 @@
   }
 
   @media (hover: hover) {
-    &:hover {
-      box-shadow: 0 3px 10px rgba(0 0 0 / 15%);
-      transform: translateY(-3px);
+    &:not(.missing) {
+      &:hover {
+        box-shadow: 0 3px 10px rgba(0 0 0 / 15%);
+        transform: translateY(-3px);
+      }
     }
   }
 
@@ -58,5 +60,16 @@
     margin-top: 1.5rem;
     background-color: lighten(utils.$col-primary-1, utils.$col-modify);
     cursor: pointer;
+  }
+
+  &.missing {
+    background-color: transparent;
+    border: 2px dashed utils.$col-gray-lighter;
+
+    p {
+      margin: 0;
+      text-align: center;
+      color: utils.$col-gray;
+    }
   }
 }

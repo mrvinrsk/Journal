@@ -100,8 +100,14 @@ $moods = $pdo->query("SELECT * FROM Mood;");
 <div class="popups">
     <div class="popup" id="success">
         <h2>Gespeichert</h2>
-        <p>Du hast deinen Eintrag gespeichert.</p>
-        <span id="message"></span>
+        <p>Dein Eintrag wurde erfolgreich gespeichert. Du kannst ihn <a id="created-post" href="">hier</a> lesen, oder dieses Popup schließen und einen weiteren verfassen.</p>
+        <p id="message"></p>
+    </div>
+
+    <div class="popup" id="missing">
+        <h2>Fehlende Angaben</h2>
+        <p>Deinem Eintrag fehlen die folgenden Angaben:</p>
+        <ul id="missing-list"></ul>
     </div>
 </div>
 
@@ -136,7 +142,7 @@ $moods = $pdo->query("SELECT * FROM Mood;");
     document.querySelector("#save").addEventListener("click", () => {
         let title = document.querySelector("#title").value;
         let content = document.querySelector("#content").value;
-        let mood = document.querySelector(".mood.selected").dataset.id;
+        let mood = (document.querySelector(".mood.selected") ? document.querySelector(".mood.selected").dataset.id : null);
 
         title = sanitizeInput(title);
         content = sanitizeInput(content);
@@ -148,40 +154,73 @@ $moods = $pdo->query("SELECT * FROM Mood;");
         content = content.replace(/h3\(\(([^)]+)\)\)/g, '<h3>$1</h3>');
         content = content.replace(/h4\(\(([^)]+)\)\)/g, '<h4>$1</h4>');
 
-        $.ajax({
-            url: "ajax/write.php",
-            type: "GET",
-            data: {
-                title: title,
-                content: content,
-                mood: mood,
-                user: <?php echo $userId; ?>
-            },
-            success: (data) => {
-                let msg = document.querySelector("#message");
+        let missing = [];
 
-                $.ajax({
-                    url: "ajax/getMoodSelectionMessage.php",
-                    data: {
-                        mood: mood
-                    },
-                    success: (data) => {
-                        msg.innerHTML = data;
-                    }
-                });
+        if (mood === null) {
+            missing.push("Stimmung");
+        }
 
-                document.querySelectorAll("input, textarea").forEach(input => {
-                    input.value = "";
-                });
+        if (title === "") {
+            missing.push("Titel");
+        }
 
-                document.querySelectorAll(".mood").forEach(mood => {
-                    mood.classList.remove("selected");
-                });
+        if (content === "") {
+            missing.push("Inhalt");
+        }
 
-
-                togglePopup("success");
-            }
+        document.querySelector("#missing-list").innerHTML = "";
+        missing.forEach((item, index) => {
+            document.querySelector("#missing-list").innerHTML += "<li>" + item + "</li>";
         });
+
+        if (missing.length === 0) {
+            $.ajax({
+                url: "ajax/write.php",
+                type: "GET",
+                data: {
+                    title: title,
+                    content: content,
+                    mood: mood,
+                    user: <?php echo $userId; ?>
+                },
+                success: (data) => {
+                    let msg = document.querySelector("#message");
+
+                    $.ajax({
+                        url: "ajax/getMoodSelectionMessage.php",
+                        data: {
+                            mood: mood
+                        },
+                        success: (data) => {
+                            msg.innerHTML = data;
+                        }
+                    });
+
+                    $.ajax({
+                        url: "ajax/getNewestEntryByUser.php",
+                        data: {
+                            user: <?php echo $userId; ?>
+                        },
+                        success: (result) => {
+                            document.querySelector("#created-post").href = "read/" + result;
+                        }
+                    });
+
+                    document.querySelectorAll("input, textarea").forEach(input => {
+                        input.value = "";
+                    });
+
+                    document.querySelectorAll(".mood").forEach(mood => {
+                        mood.classList.remove("selected");
+                    });
+
+
+                    togglePopup("success");
+                }
+            });
+        } else {
+            togglePopup("missing");
+        }
     });
 </script>
 
